@@ -86,13 +86,13 @@ html, body, #root {
 
 .label {
     display: block;
-    height: 100%;
+    /*height: 100%;*/
 }
 
-.label input {
-    visibility: hidden;
-    display: none;
-}
+/*.label input {*/
+/*    visibility: hidden;*/
+/*    display: none;*/
+/*}*/
 
 .loader {
     position: absolute;
