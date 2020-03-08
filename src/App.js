@@ -27,7 +27,7 @@ function App() {
     return (
         <div className="app" style={{ backgroundColor: color }}>
             <label className="label">
-                <input type="color" ref={(input) => input && input.focus()}
+                <input type="color" ref={(input) => input && input.click()}
                        onChange={handleChange} value={color}/>
             </label>
             {loading && (
@@ -47,3 +47,5 @@ function App() {
 }
 
 export default App;
+
+console.log('App ver: ', process.env.SOURCE_VERSION);
