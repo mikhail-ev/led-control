@@ -46,6 +46,7 @@ function App() {
     );
 }
 
+console.log('App ver: ', process.env.SOURCE_VERSION);
+
 export default App;
 
-console.log('App ver: ', process.env.SOURCE_VERSION);
