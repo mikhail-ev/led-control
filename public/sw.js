@@ -17,6 +17,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(event.request).then((resp) => {
             console.log((!!resp ? 'From cache: ' : 'Fetching: ') + event.request.url);
+            resp.body.getReader().read().then(console.log);
             return resp || fetch(event.request);
         })
     );

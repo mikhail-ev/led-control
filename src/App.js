@@ -27,7 +27,8 @@ function App() {
     return (
         <div className="app" style={{ backgroundColor: color }}>
             <label className="label">
-                <input type="color" onChange={handleChange} value={color}/>
+                <input type="color" ref={(input) => input && input.focus()}
+                       onChange={handleChange} value={color}/>
             </label>
             {loading && (
                 <div className="loader">
