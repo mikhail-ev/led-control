@@ -25,9 +25,9 @@ function App() {
     }
 
     return (
-        <div className="app" style={{ backgroundColor: color }}>
-            <label className="label">
-                <input type="color" ref={(input) => input && input.click()}
+        <div className="app">
+            <label className="label" style={{backgroundColor: color, display: 'block', height: '100%'}}>
+                <input type="color" style={{position: 'absolute', left: '-100%'}}
                        onChange={handleChange} value={color}/>
             </label>
             {loading && (

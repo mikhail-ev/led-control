@@ -2,6 +2,7 @@ self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open('v1').then(function (cache) {
             return cache.addAll([
+                './',
                 './static/js/bundle.js',
                 './static/js/0.chunk.js',
                 './static/js/main.chunk.js',
