@@ -1,0 +1,21 @@
+{
+  "name": "led-control",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TargetTaiga/led-control.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TargetTaiga/led-control/issues"
+  },
+  "homepage": "https://github.com/TargetTaiga/led-control#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
