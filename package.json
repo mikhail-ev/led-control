@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "build": "echo $SOURCE_VERSION"
   },
   "repository": {
     "type": "git",
