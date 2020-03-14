@@ -17,5 +17,8 @@
   "homepage": "https://github.com/TargetTaiga/led-control#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "engines": {
+    "node": "13.x"
   }
 }
