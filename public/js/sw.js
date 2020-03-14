@@ -2,14 +2,10 @@ self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open('v1').then(function (cache) {
             return cache.addAll([
-                './',
-                './static/js/bundle.js',
-                './static/js/0.chunk.js',
-                './static/js/main.chunk.js',
-                './manifest.json',
-                './favicon.ico',
-                './logo192.png',
-            ]).then(() => console.log('App cached'));
+                '/',
+                '/index.html',
+                '/js/controls.js',
+            ]).then(() => console.log('App cached'), (e) => console.warn(e));
         })
     )
 });
