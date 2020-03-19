@@ -16,7 +16,21 @@
 const char* ssid = STASSID;
 const char* password = STAPSK;
 
+int red = 255;
+int green = 255;
+int blue = 255;
+
 ESP8266WebServer server(80);
+
+void handleStatus() {
+  digitalWrite(BUILDIN_LED, LOW);
+  char out[128];
+  snprintf(out, 128, "{\"red\":%d,\"green\":%d,\"blue\":%d}", red, green, blue);
+  Serial.print("Sending status: ");
+  Serial.println(out);
+  server.send(200, "application/json", out);
+  digitalWrite(BUILDIN_LED, HIGH);
+}
 
 void handleUpdate() {
   digitalWrite(BUILDIN_LED, LOW);
@@ -45,28 +59,38 @@ void handleNotFound() {
 }
 
 int covertResolution(int value) {
-  if (value < 0) {
-    return 0;
-  }
-  if (value >= 255) {
-    return 1023;
-  }
-  return (int) round(value / 255.0 * 1023);
+  return (int) round(constrain(value, 0, 255) / 255.0 * 1023);
 }
 
-void setColors(int red, int green, int blue) {
-  red = covertResolution(red);
-  green = covertResolution(green);
-  blue = covertResolution(blue);
-  analogWrite(R_LED, red);
+void setColors(int redInput, int greenInput, int blueInput) {
+  red = constrain(redInput, 0, 255);
+  green = constrain(greenInput, 0, 255);
+  blue = constrain(blueInput, 0, 255);
+  int redResolved = covertResolution(red);
+  int greenResolved = covertResolution(green);
+  int blueResolved = covertResolution(blue);
+  analogWrite(R_LED, redResolved);
   Serial.print("Setting red: ");
-  Serial.println(red);
-  analogWrite(G_LED, green);
+  Serial.println(redResolved);
+  analogWrite(G_LED, greenResolved);
   Serial.print("Setting green: ");
-  Serial.println(green);
-  analogWrite(B_LED, blue);
+  Serial.println(greenResolved);
+  analogWrite(B_LED, blueResolved);
   Serial.print("Setting blue: ");
-  Serial.println(blue);
+  Serial.println(blueResolved);
+}
+
+void blinkTwice(int redValue, int greenValue, int blueValue) {
+  int previousRed = red;
+  int previousGreen = green;
+  int previousBlue = blue;
+  setColors(redValue, greenValue, blueValue);
+  delay(300);
+  setColors(previousRed, previousGreen, previousBlue);
+  delay(300);
+  setColors(redValue, greenValue, blueValue);
+  delay(300);
+  setColors(previousRed, previousGreen, previousBlue);
 }
 
 void setup(void) {
@@ -83,21 +107,30 @@ void setup(void) {
   WiFi.begin(ssid, password);
   Serial.println("");
 
+  setColors(255, 255, 255);
+
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
+
   Serial.println("");
   Serial.print("Connected to ");
   Serial.println(ssid);
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
+  blinkTwice(0, 255, 0);
+
+  delay(1000);
+
   if (MDNS.begin("esp8266")) {
     Serial.println("MDNS responder started");
+    blinkTwice(0, 0, 255);
   }
 
   server.on("/update", handleUpdate);
+  server.on("/status", handleStatus);
   server.onNotFound(handleNotFound);
 
   server.begin();
