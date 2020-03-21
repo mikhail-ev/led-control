@@ -138,7 +138,7 @@
     fetch('/status').then(handleResponse).then(function(response) {
         response.json().then(function(rgb) {
             document.querySelector('label').style.backgroundColor =
-                "rgb(".concat(rgb.r, ",").concat(rgb.g, ",").concat(rgb.b);
+                "rgb(".concat(rgb.red, ",").concat(rgb.green, ",").concat(rgb.blue).concat(')');
             start();
         }).catch(showError);
     }).catch(showError);
