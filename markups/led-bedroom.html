@@ -33,7 +33,7 @@
 
     document.querySelector('input').addEventListener('change', debounce(function(event) {
         var rgb = hexToRgb(event.target.value);
-        fetch("update/?r=".concat(rgb.r, "&g=").concat(rgb.g, "&b=").concat(rgb.b));
+        fetch("update?r=".concat(rgb.r, "&g=").concat(rgb.g, "&b=").concat(rgb.b));
     }, 100));
 </script>
 </body>
