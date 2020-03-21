@@ -3,13 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style rel="stylesheet">
+        .icon {
+            font-size: 30vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .invisible {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        @keyframes hide {
+            from {
+                visibility: visible;
+                opacity: 1;
+            }
+            to {
+                visibility: hidden;
+                opacity: 0;
+            }
+        }
+
+        @keyframes show-hide {
+            from {
+                visibility: hidden;
+                opacity: 0;
+            }
+            50% {
+                visibility: visible;
+                opacity: 1;
+            }
+            to {
+                visibility: hidden;
+                opacity: 0;
+            }
+        }
+
+        @keyframes show {
+            from {
+                visibility: hidden;
+                opacity: 0;
+            }
+            to {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+
+        .hide-now {
+            animation-name: hide;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+        }
+
+        .hide {
+            animation-name: hide;
+            animation-duration: 1s;
+            animation-delay: 1s;
+            animation-fill-mode: forwards;
+        }
+
+        .show-hide {
+            animation-name: show-hide;
+            animation-duration: 2s;
+            animation-delay: 2s;
+            animation-fill-mode: forwards;
+        }
+
+        .show {
+            animation-name: show;
+            animation-delay: 1s;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+        }
+    </style>
 </head>
-<body style="height: 100%; margin: 0">
-<label style="display: block; height: 100%;">
-    <input type="color" style="position: absolute; top: -100%">
+<body style="margin: 0; height: 100%; position: relative">
+<label style="position: fixed; top: 0; left: 0; height: 100%; width: 100%; transition: background-color 0.3s">
+    <input type="color" style="position: fixed; top: -100%">
 </label>
+<div class="icon">☝️</div>
+<div class="icon invisible">👍</div>
+<div class="icon invisible">☠️️</div>
 
 <script type="application/javascript">
+    function start() {
+        var icons = document.querySelectorAll('.icon');
+        icons[0].classList.add('hide');
+        icons[1].classList.add('show-hide');
+    }
+
     function debounce(func, wait) {
         var timeout;
         return function() {
@@ -31,9 +122,32 @@
         } : null;
     }
 
+    function showError() {
+        var icons = document.querySelectorAll('.icon');
+        icons[0].classList.add('hide-now');
+        icons[2].classList.add('show');
+    }
+
+    function handleResponse(response) {
+        if (!response.ok) {
+            throw new Error();
+        }
+        return response
+    }
+
+    fetch('/status').then(handleResponse).then(function(response) {
+        response.json().then(function(rgb) {
+            document.querySelector('label').style.backgroundColor =
+                "rgb(".concat(rgb.r, ",").concat(rgb.g, ",").concat(rgb.b);
+            start();
+        }).catch(showError);
+    }).catch(showError);
+
     document.querySelector('input').addEventListener('change', debounce(function(event) {
         var rgb = hexToRgb(event.target.value);
-        fetch("update?r=".concat(rgb.r, "&g=").concat(rgb.g, "&b=").concat(rgb.b));
+        document.querySelector('label').style.backgroundColor = event.target.value;
+        fetch("update?r=".concat(rgb.r, "&g=").concat(rgb.g, "&b=").concat(rgb.b))
+            .then(handleResponse).catch(showError)
     }, 100));
 </script>
 </body>
