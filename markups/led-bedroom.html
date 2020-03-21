@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="height: 100%; margin: 0">
+<label style="display: block; height: 100%;">
+    <input type="color" style="position: absolute; top: -100%">
+</label>
+
+<script type="application/javascript">
+    function debounce(func, wait) {
+        var timeout;
+        return function() {
+            var args = arguments;
+            var later = function() {
+                func.apply(null, args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
+
+    document.querySelector('input').addEventListener('change', debounce(function(event) {
+        var rgb = hexToRgb(event.target.value);
+        fetch("update/?r=".concat(rgb.r, "&g=").concat(rgb.g, "&b=").concat(rgb.b));
+    }, 100));
+</script>
+</body>
+</html>

@@ -13,8 +13,11 @@
 #define B_LED D3
 #define BUILDIN_LED 2
 
+#define APP_NAME "led-bedroom"
+
 const char* ssid = STASSID;
 const char* password = STAPSK;
+const char* app = APP_NAME;
 
 int red = 255;
 int green = 255;
@@ -124,7 +127,7 @@ void setup(void) {
 
   delay(1000);
 
-  if (MDNS.begin("esp8266")) {
+  if (MDNS.begin(app)) {
     Serial.println("MDNS responder started");
     blinkTwice(0, 0, 255);
   }
