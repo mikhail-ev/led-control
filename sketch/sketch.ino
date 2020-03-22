@@ -25,6 +25,7 @@ int green = 255;
 int blue = 255;
 
 String markup = "";
+String etag = "";
 
 ESP8266WebServer server(80);
 
@@ -66,6 +67,8 @@ void handleNotFound() {
 
 void handleRoot() {
   digitalWrite(BUILDIN_LED, LOW);
+  server.sendHeader("Cache-Control", "public,immutable");
+  server.sendHeader("ETag", etag);
   server.send(200, "text/html", markup);
   digitalWrite(BUILDIN_LED, HIGH);
 }
@@ -129,6 +132,8 @@ boolean loadMarkup() {
       // file found at server
       if (httpCode == HTTP_CODE_OK) {
         markup = http.getString();
+        etag = markup.substring(35, 43);
+        Serial.println(etag);
         success = true;
       }
     } else {
