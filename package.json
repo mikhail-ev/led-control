@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "echo $SOURCE_VERSION"
+    "build": "echo $SOURCE_VERSION",
+    "build2": "envsub markups/led-bedroom.html built-markups/led-bedroom.html"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   },
   "homepage": "https://github.com/TargetTaiga/led-control#readme",
   "dependencies": {
+    "envsub": "^4.0.7",
     "express": "^4.17.1",
     "html-minifier": "^4.0.0",
     "install": "^0.13.0",

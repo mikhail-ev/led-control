@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%">
+<html data-version="${SOURCE_VERSION}" lang="en" style="height: 100%">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -98,64 +98,64 @@
 <div class="icon invisible">👍</div>
 <div class="icon invisible">☠️️</div>
 
-<script type="application/javascript">
-    function start() {
-        var icons = document.querySelectorAll('.icon');
-        icons[0].classList.add('hide');
-        icons[1].classList.add('show-hide');
-    }
+<!--<script type="application/javascript">-->
+<!--    function start() {-->
+<!--        var icons = document.querySelectorAll('.icon');-->
+<!--        icons[0].classList.add('hide');-->
+<!--        icons[1].classList.add('show-hide');-->
+<!--    }-->
 
-    function debounce(func, wait) {
-        var timeout;
-        return function() {
-            var args = arguments;
-            var later = function() {
-                func.apply(null, args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
+<!--    function debounce(func, wait) {-->
+<!--        var timeout;-->
+<!--        return function() {-->
+<!--            var args = arguments;-->
+<!--            var later = function() {-->
+<!--                func.apply(null, args);-->
+<!--            };-->
+<!--            clearTimeout(timeout);-->
+<!--            timeout = setTimeout(later, wait);-->
+<!--        };-->
+<!--    }-->
 
-    function hexToRgb(hex) {
-        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-        return result ? {
-            r: parseInt(result[1], 16),
-            g: parseInt(result[2], 16),
-            b: parseInt(result[3], 16)
-        } : null;
-    }
+<!--    function hexToRgb(hex) {-->
+<!--        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);-->
+<!--        return result ? {-->
+<!--            r: parseInt(result[1], 16),-->
+<!--            g: parseInt(result[2], 16),-->
+<!--            b: parseInt(result[3], 16)-->
+<!--        } : null;-->
+<!--    }-->
 
-    function showError() {
-        var icons = document.querySelectorAll('.icon');
-        icons[0].classList.add('hide-now');
-        icons[2].classList.add('show');
-    }
+<!--    function showError() {-->
+<!--        var icons = document.querySelectorAll('.icon');-->
+<!--        icons[0].classList.add('hide-now');-->
+<!--        icons[2].classList.add('show');-->
+<!--    }-->
 
-    function handleResponse(response) {
-        if (!response.ok) {
-            throw new Error();
-        }
-        return response
-    }
+<!--    function handleResponse(response) {-->
+<!--        if (!response.ok) {-->
+<!--            throw new Error();-->
+<!--        }-->
+<!--        return response-->
+<!--    }-->
 
-    fetch('/status').then(handleResponse).then(function(response) {
-        response.json().then(function(rgb) {
+<!--    fetch('/status').then(handleResponse).then(function(response) {-->
+<!--        response.json().then(function(rgb) {-->
 
-            start();
-            setTimeout((function() {
-                document.querySelector('label').style.backgroundColor =
-                    "rgb(".concat(rgb.red, ",").concat(rgb.green, ",").concat(rgb.blue).concat(')');
-            }), 2000)
-        }).catch(showError);
-    }).catch(showError);
+<!--            start();-->
+<!--            setTimeout((function() {-->
+<!--                document.querySelector('label').style.backgroundColor =-->
+<!--                    "rgb(".concat(rgb.red, ",").concat(rgb.green, ",").concat(rgb.blue).concat(')');-->
+<!--            }), 2000)-->
+<!--        }).catch(showError);-->
+<!--    }).catch(showError);-->
 
-    document.querySelector('input').addEventListener('change', debounce(function(event) {
-        var rgb = hexToRgb(event.target.value);
-        document.querySelector('label').style.backgroundColor = event.target.value;
-        fetch("update?r=".concat(rgb.r, "&g=").concat(rgb.g, "&b=").concat(rgb.b))
-            .then(handleResponse).catch(showError)
-    }, 100));
-</script>
+<!--    document.querySelector('input').addEventListener('change', debounce(function(event) {-->
+<!--        var rgb = hexToRgb(event.target.value);-->
+<!--        document.querySelector('label').style.backgroundColor = event.target.value;-->
+<!--        fetch("update?r=".concat(rgb.r, "&g=").concat(rgb.g, "&b=").concat(rgb.b))-->
+<!--            .then(handleResponse).catch(showError)-->
+<!--    }, 100));-->
+<!--</script>-->
 </body>
 </html>
