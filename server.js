@@ -34,6 +34,10 @@ app.get('/markup', (req, res) => {
     })
 });
 
+app.get('/status', (req, res) => {
+   res.json({ red: 255, green: 100, blue: 100 });
+});
+
 app.all('*', (req, res) => res.sendStatus(404));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

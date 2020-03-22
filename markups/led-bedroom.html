@@ -137,9 +137,12 @@
 
     fetch('/status').then(handleResponse).then(function(response) {
         response.json().then(function(rgb) {
-            document.querySelector('label').style.backgroundColor =
-                "rgb(".concat(rgb.red, ",").concat(rgb.green, ",").concat(rgb.blue).concat(')');
+
             start();
+            setTimeout((function() {
+                document.querySelector('label').style.backgroundColor =
+                    "rgb(".concat(rgb.red, ",").concat(rgb.green, ",").concat(rgb.blue).concat(')');
+            }), 2000)
         }).catch(showError);
     }).catch(showError);
 
