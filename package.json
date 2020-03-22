@@ -4,8 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "echo $SOURCE_VERSION",
-    "build2": "envsub markups/led-bedroom.html built-markups/led-bedroom.html"
+    "build": "echo $SOURCE_VERSION && find ./markups -iname '*.html' -exec node_modules/.bin/envsub {} {} \\;"
   },
   "repository": {
     "type": "git",
